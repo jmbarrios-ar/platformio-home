@@ -78,11 +78,9 @@ void loop()
   }
   client.loop();
 
-  // Leer el estado del sensor de movimiento PIR
-  int pirValue = digitalRead(pirPin);
+  pirValue = digitalRead(pirPin);  // Leer el estado del sensor de movimiento PIR
 
-  if (pirValue == HIGH) {
-    // Publicar el estado de disparo de la alarma cuando se detecta movimiento
+  if (pirValue == HIGH) {       // Publicar el estado de disparo de la alarma cuando se detecta movimiento
     
     digitalWrite(D6, HIGH);
     if (pirState == LOW)  //si previamente estaba apagado
@@ -92,17 +90,16 @@ void loop()
       pirState = HIGH;
     }
     delay(1000); // Esperar un segundo antes de volver a publicar para evitar múltiples publicaciones consecutivas
-  
+  }
   else   //si esta desactivado
   {
     digitalWrite(D6, LOW); // LED OFF
     if (pirState == HIGH)  //si previamente estaba encendido
-    {
-      client.publish(alarm_topic, "Alarma desactivada - Sin Movimiento alguno");
-      Serial.println("Sensor parado");
-      pirState = LOW;
+      {
+        client.publish(alarm_topic, "Alarma desactivada - Sin Movimiento alguno");
+        Serial.println("Sensor parado");
+        pirState = LOW;
+      }
     }
-  }
   // Puedes agregar más lógica aquí según tus necesidades, como apagar la alarma después de cierto tiempo, etc.
-  }
 }

@@ -6,35 +6,38 @@
 const int LEDPin = D6;        // pin para el LED
 const int PIRPin = D7;         // pin de entrada (for PIR sensor)
 
-int pirState = LOW;           // de inicio no hay movimiento
-int val = 0;                  // estado del pin
+//int pirState = LOW;           // de inicio no hay movimiento
+//int val = LOW;                  // estado del pin
 
 void setup() 
 {
   pinMode(LEDPin, OUTPUT); 
   pinMode(PIRPin, INPUT);
   Serial.begin(115200);
+  delay(60*1000);
 }
 
 void loop()
 {
-  val = digitalRead(PIRPin);
+  int val = digitalRead(PIRPin);
   if (val == HIGH)   //si está activado
   { 
     digitalWrite(LEDPin, HIGH);  //LED ON
-    if (pirState == LOW)  //si previamente estaba apagado
-    {
-      Serial.println("Sensor activado");
-      pirState = HIGH;
-    }
+    //if (pirState == LOW)  //si previamente estaba apagado
+    //{
+      Serial.println("Movimiento detectado");
+      //pirState = HIGH;
+    //}
   } 
   else   //si esta desactivado
   {
     digitalWrite(LEDPin, LOW); // LED OFF
-    if (pirState == HIGH)  //si previamente estaba encendido
-    {
-      Serial.println("Sensor parado");
-      pirState = LOW;
-    }
+    Serial.println("No hay movimiento detectado");
+    //if (pirState == HIGH)  //si previamente estaba encendido
+    //{
+      
+      //pirState = LOW;
+    //}
   }
+delay(1000);
 }
